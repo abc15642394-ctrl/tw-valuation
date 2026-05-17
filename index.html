@@ -263,6 +263,25 @@
     font-size: 0.85rem;
     padding: 40px 0;
   }
+
+  /* ── 股票代號自動帶入狀態 ── */
+  .ticker-wrap { position: relative; }
+
+  .ticker-status {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.75rem;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+
+  .ticker-status.loading { color: #6b7a99; }
+  .ticker-status.ok      { color: #3cb97a; }
+  .ticker-status.error   { color: #e05555; }
+
+  .ticker-wrap input { padding-right: 60px; }
 </style>
 </head>
 <body>
@@ -275,7 +294,10 @@
   <div class="input-grid">
     <div class="field">
       <label>股票代號</label>
-      <input id="ticker" type="text" value="2049" placeholder="e.g. 2049">
+      <div class="ticker-wrap">
+        <input id="ticker" type="text" value="2049" placeholder="e.g. 2049" autocomplete="off">
+        <span id="tickerStatus" class="ticker-status"></span>
+      </div>
     </div>
     <div class="field">
       <label>股票名稱</label>
@@ -475,6 +497,46 @@
       document.getElementById('res-pe').innerHTML = '<p class="empty-msg">請輸入每股盈餘 (EPS)</p>';
     }
   }
+
+  // ── 股票代號自動帶入 ─────────────────────
+  let fetchTimer = null;
+  const statusEl = document.getElementById('tickerStatus');
+
+  document.getElementById('ticker').addEventListener('input', function () {
+    clearTimeout(fetchTimer);
+    const code = this.value.trim();
+    statusEl.textContent = '';
+    statusEl.className = 'ticker-status';
+    if (code.length < 4) return;
+    statusEl.textContent = '查詢中…';
+    statusEl.className = 'ticker-status loading';
+    fetchTimer = setTimeout(() => fetchStockInfo(code), 500);
+  });
+
+  async function fetchStockInfo(code) {
+    for (const ex of ['tse', 'otc']) {
+      try {
+        const url = `https://mis.twse.com.tw/stock/api/getStockInfo.jsp?ex_ch=${ex}_${code}.tw&json=1&delay=0`;
+        const res  = await fetch(url);
+        const data = await res.json();
+        const msg  = data.msgArray?.[0];
+        if (!msg || !msg.n) continue;
+
+        document.getElementById('stockName').value  = msg.n;
+        // z = 即時成交價，非交易時間為 '-'，fallback 用 y (昨收)
+        const price = (msg.z && msg.z !== '-') ? msg.z : msg.y;
+        if (price && price !== '-') {
+          document.getElementById('currentPrice').value = parseFloat(price).toFixed(2);
+        }
+        statusEl.textContent = '✓ ' + msg.n;
+        statusEl.className = 'ticker-status ok';
+        return;
+      } catch (_) { /* ignore, try next */ }
+    }
+    statusEl.textContent = '找不到';
+    statusEl.className = 'ticker-status error';
+  }
+  // ─────────────────────────────────────────
 
   // 頁面載入時自動計算一次
   calculate();
