@@ -23,16 +23,15 @@
     letter-spacing: 1px;
   }
 
-  /* ── 輸入區 ── */
-  .input-section {
+  .section {
     background: #23273a;
     border: 1px solid #2e3451;
     border-radius: 10px;
     padding: 20px 24px;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
   }
 
-  .input-section h2 {
+  .section h2 {
     font-size: 0.8rem;
     text-transform: uppercase;
     letter-spacing: 1.5px;
@@ -42,7 +41,7 @@
 
   .input-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     gap: 12px;
   }
 
@@ -68,13 +67,15 @@
 
   .field input:focus { border-color: #5a7fcb; }
 
-  .calc-btn {
-    margin-top: 16px;
-    background: #3d5fa8;
-    color: #fff;
+  .field.scenario-pess input { border-color: #6a3a44; }
+  .field.scenario-opt  input { border-color: #2d5a44; }
+
+  .btn-row { margin-top: 16px; display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+
+  .calc-btn, .hist-btn {
     border: none;
     border-radius: 7px;
-    padding: 10px 28px;
+    padding: 10px 24px;
     font-size: 0.9rem;
     font-weight: 600;
     cursor: pointer;
@@ -82,39 +83,72 @@
     letter-spacing: 0.5px;
   }
 
+  .calc-btn { background: #3d5fa8; color: #fff; }
   .calc-btn:hover { background: #4f75c8; }
+
+  .hist-btn { background: #2a4a3d; color: #8fd9b0; }
+  .hist-btn:hover { background: #356052; }
+
+  .data-note {
+    font-size: 0.74rem;
+    color: #6b7a99;
+    margin-top: 10px;
+    line-height: 1.6;
+  }
+  .data-note.ok { color: #3cb97a; }
+  .data-note.error { color: #e05555; }
+
+  /* ── 股票代號自動帶入狀態 ── */
+  .ticker-wrap { position: relative; }
+  .ticker-status {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.75rem;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+  .ticker-status.loading { color: #6b7a99; }
+  .ticker-status.ok      { color: #3cb97a; }
+  .ticker-status.error   { color: #e05555; }
+  .ticker-wrap input { padding-right: 60px; }
+
+  /* ── token 折疊區 ── */
+  details.token-box { margin-top: 12px; }
+  details.token-box summary {
+    font-size: 0.74rem;
+    color: #6b7a99;
+    cursor: pointer;
+    user-select: none;
+  }
+  details.token-box input {
+    margin-top: 8px;
+    width: 100%;
+    max-width: 480px;
+    background: #1a1d23;
+    border: 1px solid #3a4060;
+    border-radius: 6px;
+    padding: 7px 10px;
+    color: #e0e6f0;
+    font-size: 0.8rem;
+    outline: none;
+  }
 
   /* ── 倍數編輯區 ── */
   .levels-wrapper {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 20px;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
   }
-
   @media (max-width: 640px) { .levels-wrapper { grid-template-columns: 1fr; } }
-
-  .levels-section {
-    background: #23273a;
-    border: 1px solid #2e3451;
-    border-radius: 10px;
-    padding: 18px 20px;
-  }
-
-  .levels-section h2 {
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    color: #6b7a99;
-    margin-bottom: 12px;
-  }
 
   .levels-table {
     width: 100%;
     border-collapse: collapse;
     font-size: 0.85rem;
   }
-
   .levels-table th {
     color: #6b7a99;
     font-weight: 500;
@@ -123,15 +157,9 @@
     padding: 4px 6px 8px;
     border-bottom: 1px solid #2e3451;
   }
-
   .levels-table td { padding: 4px 6px; }
-
-  .levels-table td:first-child {
-    color: #7eb8f7;
-    font-weight: 600;
-    width: 50px;
-  }
-
+  .levels-table td:first-child { color: #7eb8f7; font-weight: 600; width: 46px; }
+  .levels-table .lv-note { font-size: 0.7rem; color: #6b7a99; }
   .levels-table input[type="number"] {
     width: 80px;
     background: #1a1d23;
@@ -142,20 +170,14 @@
     font-size: 0.85rem;
     outline: none;
   }
-
   .levels-table input[type="number"]:focus { border-color: #5a7fcb; }
 
   .remove-btn {
-    background: none;
-    border: none;
-    color: #555e7a;
-    cursor: pointer;
-    font-size: 1rem;
-    padding: 2px 6px;
-    border-radius: 4px;
+    background: none; border: none;
+    color: #555e7a; cursor: pointer;
+    font-size: 1rem; padding: 2px 6px; border-radius: 4px;
     transition: color 0.2s;
   }
-
   .remove-btn:hover { color: #e05555; }
 
   .add-btn {
@@ -170,7 +192,6 @@
     width: 100%;
     transition: border-color 0.2s, color 0.2s;
   }
-
   .add-btn:hover { border-color: #5a7fcb; color: #7eb8f7; }
 
   /* ── 結果區 ── */
@@ -179,8 +200,7 @@
     grid-template-columns: 1fr 1fr;
     gap: 20px;
   }
-
-  @media (max-width: 640px) { .results-wrapper { grid-template-columns: 1fr; } }
+  @media (max-width: 900px) { .results-wrapper { grid-template-columns: 1fr; } }
 
   .result-card {
     background: #23273a;
@@ -195,67 +215,103 @@
     display: flex;
     align-items: baseline;
     gap: 10px;
+    flex-wrap: wrap;
   }
+  .result-header .ticker { font-size: 1rem; font-weight: 700; color: #7eb8f7; }
+  .result-header .name   { font-size: 0.9rem; color: #a0aac0; }
+  .result-header .metric { margin-left: auto; font-size: 0.75rem; color: #6b7a99; }
 
-  .result-header .ticker {
-    font-size: 1rem;
-    font-weight: 700;
-    color: #7eb8f7;
-  }
-
-  .result-header .name {
-    font-size: 0.9rem;
+  .position-summary {
+    padding: 10px 18px;
+    font-size: 0.8rem;
     color: #a0aac0;
+    background: #1f2438;
+    border-bottom: 1px solid #2e3451;
+    line-height: 1.6;
   }
+  .position-summary .up   { color: #3cb97a; }
+  .position-summary .down { color: #e05555; }
 
-  .result-header .metric {
-    margin-left: auto;
-    font-size: 0.75rem;
+  /* ── 刻度尺 ── */
+  .scale-bar-wrap { padding: 22px 18px 30px; border-bottom: 1px solid #2e3451; }
+  .scale-bar {
+    position: relative;
+    height: 8px;
+    border-radius: 4px;
+    background: linear-gradient(90deg, #3cb97a 0%, #d4a03a 55%, #e05555 100%);
+  }
+  .scale-tick {
+    position: absolute;
+    top: -6px;
+    width: 2px;
+    height: 20px;
+    background: #55608a;
+    transform: translateX(-50%);
+  }
+  .scale-tick-label {
+    position: absolute;
+    top: 16px;
+    transform: translateX(-50%);
+    font-size: 0.62rem;
     color: #6b7a99;
+    white-space: nowrap;
+  }
+  .scale-price-marker {
+    position: absolute;
+    top: -14px;
+    transform: translateX(-50%);
+    text-align: center;
+  }
+  .scale-price-marker .arrow {
+    width: 0; height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 8px solid #7eb8f7;
+    margin: 0 auto;
+  }
+  .scale-price-marker .price-label {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.68rem;
+    color: #7eb8f7;
+    font-weight: 700;
+    white-space: nowrap;
   }
 
   .result-table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 0.875rem;
+    font-size: 0.86rem;
   }
-
   .result-table th {
     background: #1e2235;
     color: #6b7a99;
     font-weight: 500;
-    font-size: 0.72rem;
+    font-size: 0.7rem;
     text-align: right;
-    padding: 8px 16px;
+    padding: 8px 12px;
     border-bottom: 1px solid #2e3451;
     letter-spacing: 0.5px;
   }
-
   .result-table th:first-child { text-align: left; }
-
   .result-table td {
-    padding: 9px 16px;
+    padding: 9px 12px;
     text-align: right;
     border-bottom: 1px solid #1e2235;
   }
-
-  .result-table td:first-child {
-    text-align: left;
-    color: #7eb8f7;
-    font-weight: 600;
-  }
-
+  .result-table td:first-child { text-align: left; color: #7eb8f7; font-weight: 600; }
+  .result-table td .lv-note { display: block; font-size: 0.64rem; color: #6b7a99; font-weight: 400; }
   .result-table td:nth-child(2) { color: #a0aac0; }
-
   .result-table tr:last-child td { border-bottom: none; }
-
-  /* highlight current price row */
   .result-table tr.current-row td { background: #1f2840; }
 
-  /* color for pct */
   .pct-neg  { color: #e05555 !important; }
   .pct-low  { color: #d4a03a !important; }
   .pct-high { color: #3cb97a !important; }
+  .td-pess { color: #d98a8a !important; }
+  .td-opt  { color: #8fd9b0 !important; }
 
   .empty-msg {
     text-align: center;
@@ -263,25 +319,6 @@
     font-size: 0.85rem;
     padding: 40px 0;
   }
-
-  /* ── 股票代號自動帶入狀態 ── */
-  .ticker-wrap { position: relative; }
-
-  .ticker-status {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 0.75rem;
-    pointer-events: none;
-    white-space: nowrap;
-  }
-
-  .ticker-status.loading { color: #6b7a99; }
-  .ticker-status.ok      { color: #3cb97a; }
-  .ticker-status.error   { color: #e05555; }
-
-  .ticker-wrap input { padding-right: 60px; }
 </style>
 </head>
 <body>
@@ -289,7 +326,7 @@
 <h1>台股估值模型</h1>
 
 <!-- 基本資料輸入 -->
-<div class="input-section">
+<div class="section">
   <h2>基本資料</h2>
   <div class="input-grid">
     <div class="field">
@@ -305,38 +342,61 @@
     </div>
     <div class="field">
       <label>現價（元）</label>
-      <input id="currentPrice" type="number" step="0.01" value="364.50" placeholder="364.50">
+      <input id="currentPrice" type="number" step="0.01" value="364.50">
     </div>
     <div class="field">
       <label>每股淨值 BVPS（元）</label>
-      <input id="bvps" type="number" step="0.01" value="303.90" placeholder="303.90">
-    </div>
-    <div class="field">
-      <label>每股盈餘 EPS（元）</label>
-      <input id="eps" type="number" step="0.01" value="15.20" placeholder="15.20">
+      <input id="bvps" type="number" step="0.01" value="303.90">
     </div>
   </div>
-  <button class="calc-btn" onclick="calculate()">計算目標價</button>
+
+  <h2 style="margin-top:18px;">EPS 三情境（元）</h2>
+  <div class="input-grid">
+    <div class="field scenario-pess">
+      <label>悲觀 EPS（衰退情境）</label>
+      <input id="epsPess" type="number" step="0.01" value="10.00">
+    </div>
+    <div class="field">
+      <label>基準 EPS（TTM / 預估）</label>
+      <input id="epsBase" type="number" step="0.01" value="15.20">
+    </div>
+    <div class="field scenario-opt">
+      <label>樂觀 EPS（擴張情境）</label>
+      <input id="epsOpt" type="number" step="0.01" value="20.00">
+    </div>
+  </div>
+
+  <div class="btn-row">
+    <button class="calc-btn" onclick="calculate()">計算目標價</button>
+    <button class="hist-btn" onclick="loadHistory()">載入 5 年歷史區間（自動定錨倍數）</button>
+  </div>
+
+  <div id="dataNote" class="data-note">
+    尚未載入歷史資料。「載入歷史區間」會從 FinMind 抓近 5 年每日 P/E、P/B，
+    用百分位數（5% / 25% / 50% / 75% / 95%）自動設定 L1–L5 倍數，並回填最新 BVPS 與 TTM EPS。
+  </div>
+
+  <details class="token-box">
+    <summary>FinMind API Token（選填，未填也可用但流量限制較嚴）</summary>
+    <input id="fmToken" type="text" placeholder="貼上 FinMind token（會存在本機瀏覽器）"
+           onchange="localStorage.setItem('fm_token', this.value.trim())">
+  </details>
 </div>
 
 <!-- 倍數設定 -->
 <div class="levels-wrapper">
-  <div class="levels-section">
+  <div class="section" style="margin-bottom:0;">
     <h2>P/B 倍數設定</h2>
     <table class="levels-table">
-      <thead>
-        <tr><th>層級</th><th>倍數 (x)</th><th></th></tr>
-      </thead>
+      <thead><tr><th>層級</th><th>倍數 (x)</th><th>備註</th><th></th></tr></thead>
       <tbody id="pbLevels"></tbody>
     </table>
     <button class="add-btn" onclick="addLevel('pb')">＋ 新增層級</button>
   </div>
-  <div class="levels-section">
+  <div class="section" style="margin-bottom:0;">
     <h2>P/E 倍數設定</h2>
     <table class="levels-table">
-      <thead>
-        <tr><th>層級</th><th>倍數 (x)</th><th></th></tr>
-      </thead>
+      <thead><tr><th>層級</th><th>倍數 (x)</th><th>備註</th><th></th></tr></thead>
       <tbody id="peLevels"></tbody>
     </table>
     <button class="add-btn" onclick="addLevel('pe')">＋ 新增層級</button>
@@ -366,148 +426,343 @@
 <script>
   // ── 預設倍數 ─────────────────────────────
   const DEFAULT_PB = [
-    { label: "L1",  value: 0.8 },
-    { label: "L2",  value: 1.0 },
-    { label: "L3",  value: 1.2 },
-    { label: "L4",  value: 1.5 },
-    { label: "L5",  value: 2.0 },
-    { label: "L6",  value: 2.5 },
-    { label: "L7",  value: 3.0 },
-    { label: "L10", value: 4.0 },
+    { label: "L1",  value: 0.8, note: "" },
+    { label: "L2",  value: 1.0, note: "" },
+    { label: "L3",  value: 1.2, note: "" },
+    { label: "L4",  value: 1.5, note: "" },
+    { label: "L5",  value: 2.0, note: "" },
+    { label: "L6",  value: 2.5, note: "" },
+    { label: "L7",  value: 3.0, note: "" },
+    { label: "L10", value: 4.0, note: "" },
   ];
-
   const DEFAULT_PE = [
-    { label: "L1",  value: 10 },
-    { label: "L2",  value: 15 },
-    { label: "L3",  value: 20 },
-    { label: "L4",  value: 25 },
-    { label: "L5",  value: 30 },
-    { label: "L6",  value: 35 },
-    { label: "L7",  value: 40 },
-    { label: "L10", value: 50 },
+    { label: "L1",  value: 10, note: "" },
+    { label: "L2",  value: 15, note: "" },
+    { label: "L3",  value: 20, note: "" },
+    { label: "L4",  value: 25, note: "" },
+    { label: "L5",  value: 30, note: "" },
+    { label: "L6",  value: 35, note: "" },
+    { label: "L7",  value: 40, note: "" },
+    { label: "L10", value: 50, note: "" },
   ];
   // ─────────────────────────────────────────
 
+  let pbLevels = DEFAULT_PB.map(r => ({ ...r }));
+  let peLevels = DEFAULT_PE.map(r => ({ ...r }));
+
+  const $ = id => document.getElementById(id);
+
+  // ── localStorage：每檔股票記住自訂倍數 ──
+  function storageKey() {
+    const t = $('ticker').value.trim();
+    return t ? 'val_levels_' + t : null;
+  }
+  function saveLevels() {
+    const key = storageKey();
+    if (!key) return;
+    localStorage.setItem(key, JSON.stringify({ pb: pbLevels, pe: peLevels }));
+  }
+  function loadLevelsFor(tickerCode) {
+    const saved = localStorage.getItem('val_levels_' + tickerCode);
+    if (!saved) return false;
+    try {
+      const obj = JSON.parse(saved);
+      if (obj.pb) pbLevels = obj.pb;
+      if (obj.pe) peLevels = obj.pe;
+      renderLevels('pb', pbLevels);
+      renderLevels('pe', peLevels);
+      return true;
+    } catch (_) { return false; }
+  }
+
   function renderLevels(type, levels) {
-    const tbody = document.getElementById(type + 'Levels');
+    const tbody = $(type + 'Levels');
     tbody.innerHTML = '';
     levels.forEach((row, i) => {
       const tr = document.createElement('tr');
       tr.innerHTML = `
         <td>${row.label}</td>
-        <td><input type="number" step="${type === 'pb' ? '0.1' : '1'}"
+        <td><input type="number" step="${type === 'pb' ? '0.1' : '0.5'}"
              value="${row.value}" min="0.1"
              oninput="updateLevel('${type}', ${i}, this.value)"></td>
+        <td class="lv-note">${row.note || ''}</td>
         <td><button class="remove-btn" onclick="removeLevel('${type}', ${i})">✕</button></td>`;
       tbody.appendChild(tr);
     });
   }
 
-  let pbLevels = DEFAULT_PB.map(r => ({ ...r }));
-  let peLevels = DEFAULT_PE.map(r => ({ ...r }));
-
-  renderLevels('pb', pbLevels);
-  renderLevels('pe', peLevels);
-
   function updateLevel(type, idx, val) {
     (type === 'pb' ? pbLevels : peLevels)[idx].value = parseFloat(val) || 0;
+    saveLevels();
   }
-
   function removeLevel(type, idx) {
-    if (type === 'pb') pbLevels.splice(idx, 1);
-    else peLevels.splice(idx, 1);
+    (type === 'pb' ? pbLevels : peLevels).splice(idx, 1);
     renderLevels(type, type === 'pb' ? pbLevels : peLevels);
+    saveLevels();
   }
-
   function addLevel(type) {
     const arr = type === 'pb' ? pbLevels : peLevels;
     const last = arr[arr.length - 1];
     const nextVal = last ? +(last.value + (type === 'pb' ? 0.5 : 5)).toFixed(1) : 1;
-    const nextLabel = 'L' + (arr.length + 1);
-    arr.push({ label: nextLabel, value: nextVal });
+    arr.push({ label: 'L' + (arr.length + 1), value: nextVal, note: '' });
     renderLevels(type, arr);
+    saveLevels();
   }
 
   function pctClass(pct) {
-    if (pct < 0)   return 'pct-neg';
-    if (pct < 20)  return 'pct-low';
+    if (pct < 0)  return 'pct-neg';
+    if (pct < 20) return 'pct-low';
     return 'pct-high';
   }
 
-  function buildTable(levels, baseValue, currentPrice) {
-    const rows = levels.map(row => {
-      const target = +(baseValue * row.value).toFixed(2);
-      const pct    = +((target / currentPrice - 1) * 100).toFixed(2);
-      return { label: row.label, multiple: row.value, target, pct };
-    });
+  // ── 刻度尺 ──
+  function buildScaleBar(rows, currentPrice) {
+    const targets = rows.map(r => r.target);
+    const lo = Math.min(...targets, currentPrice);
+    const hi = Math.max(...targets, currentPrice);
+    const span = hi - lo || 1;
+    const pad = span * 0.06;
+    const min = lo - pad, max = hi + pad;
+    const pos = v => ((v - min) / (max - min) * 100).toFixed(2);
 
-    // find closest row to current price
-    let closestIdx = 0;
-    let minDiff = Infinity;
+    let html = '<div class="scale-bar-wrap"><div class="scale-bar">';
+    rows.forEach(r => {
+      html += `<div class="scale-tick" style="left:${pos(r.target)}%"></div>
+               <div class="scale-tick-label" style="left:${pos(r.target)}%">${r.label}<br>${r.target.toFixed(0)}</div>`;
+    });
+    html += `<div class="scale-price-marker" style="left:${pos(currentPrice)}%">
+               <span class="price-label">現價 ${currentPrice}</span>
+               <div class="arrow"></div>
+             </div>`;
+    html += '</div></div>';
+    return html;
+  }
+
+  // ── 現價位置摘要（距上下層級 %）──
+  function buildPositionSummary(rows, currentPrice) {
+    const sorted = [...rows].sort((a, b) => a.target - b.target);
+    let below = null, above = null;
+    for (const r of sorted) {
+      if (r.target <= currentPrice) below = r;
+      else { above = r; break; }
+    }
+    let parts = [];
+    if (below && above) {
+      parts.push(`現價位於 <b>${below.label}–${above.label}</b> 之間`);
+    } else if (!below) {
+      parts.push(`現價低於最低層級 <b>${sorted[0].label}</b>`);
+    } else {
+      parts.push(`現價高於最高層級 <b>${sorted[sorted.length - 1].label}</b>`);
+    }
+    if (above) {
+      const up = ((above.target / currentPrice - 1) * 100).toFixed(1);
+      parts.push(`距 ${above.label}（${above.target.toFixed(2)}）還有 <span class="up">+${up}%</span>`);
+    }
+    if (below) {
+      const dn = ((below.target / currentPrice - 1) * 100).toFixed(1);
+      parts.push(`回到 ${below.label}（${below.target.toFixed(2)}）為 <span class="down">${dn}%</span>`);
+    }
+    return `<div class="position-summary">${parts.join('｜')}</div>`;
+  }
+
+  // ── P/B 表 ──
+  function buildPbTable(levels, bvps, currentPrice) {
+    const rows = levels.map(r => ({
+      label: r.label, note: r.note, multiple: r.value,
+      target: +(bvps * r.value).toFixed(2),
+      pct: +((bvps * r.value / currentPrice - 1) * 100).toFixed(2),
+    }));
+
+    let closestIdx = 0, minDiff = Infinity;
     rows.forEach((r, i) => {
       const d = Math.abs(r.target - currentPrice);
       if (d < minDiff) { minDiff = d; closestIdx = i; }
     });
 
-    let html = `<table class="result-table">
-      <thead><tr>
-        <th>層級</th><th>倍數</th><th>目標價</th><th>相對現價%</th>
-      </tr></thead><tbody>`;
-
+    let html = buildPositionSummary(rows, currentPrice);
+    html += buildScaleBar(rows, currentPrice);
+    html += `<table class="result-table">
+      <thead><tr><th>層級</th><th>倍數</th><th>目標價</th><th>相對現價%</th></tr></thead><tbody>`;
     rows.forEach((r, i) => {
-      const cls = i === closestIdx ? ' class="current-row"' : '';
-      html += `<tr${cls}>
-        <td>${r.label}</td>
+      html += `<tr${i === closestIdx ? ' class="current-row"' : ''}>
+        <td>${r.label}${r.note ? `<span class="lv-note">${r.note}</span>` : ''}</td>
         <td>${r.multiple}x</td>
         <td>${r.target.toFixed(2)}</td>
         <td class="${pctClass(r.pct)}">${r.pct >= 0 ? '+' : ''}${r.pct.toFixed(2)}%</td>
       </tr>`;
     });
+    html += '</tbody></table>';
+    return html;
+  }
 
+  // ── P/E 三情境矩陣表 ──
+  function buildPeTable(levels, epsPess, epsBase, epsOpt, currentPrice) {
+    const rows = levels.map(r => ({
+      label: r.label, note: r.note, multiple: r.value,
+      pess: epsPess > 0 ? +(epsPess * r.value).toFixed(2) : null,
+      target: +(epsBase * r.value).toFixed(2),
+      opt: epsOpt > 0 ? +(epsOpt * r.value).toFixed(2) : null,
+      pct: +((epsBase * r.value / currentPrice - 1) * 100).toFixed(2),
+    }));
+
+    let closestIdx = 0, minDiff = Infinity;
+    rows.forEach((r, i) => {
+      const d = Math.abs(r.target - currentPrice);
+      if (d < minDiff) { minDiff = d; closestIdx = i; }
+    });
+
+    let html = buildPositionSummary(rows, currentPrice);
+    html += buildScaleBar(rows, currentPrice);
+    html += `<table class="result-table">
+      <thead><tr>
+        <th>層級</th><th>倍數</th><th>悲觀</th><th>基準</th><th>樂觀</th><th>基準相對現價%</th>
+      </tr></thead><tbody>`;
+    rows.forEach((r, i) => {
+      html += `<tr${i === closestIdx ? ' class="current-row"' : ''}>
+        <td>${r.label}${r.note ? `<span class="lv-note">${r.note}</span>` : ''}</td>
+        <td>${r.multiple}x</td>
+        <td class="td-pess">${r.pess !== null ? r.pess.toFixed(2) : '—'}</td>
+        <td>${r.target.toFixed(2)}</td>
+        <td class="td-opt">${r.opt !== null ? r.opt.toFixed(2) : '—'}</td>
+        <td class="${pctClass(r.pct)}">${r.pct >= 0 ? '+' : ''}${r.pct.toFixed(2)}%</td>
+      </tr>`;
+    });
     html += '</tbody></table>';
     return html;
   }
 
   function calculate() {
-    const ticker = document.getElementById('ticker').value.trim() || '—';
-    const name   = document.getElementById('stockName').value.trim() || '—';
-    const price  = parseFloat(document.getElementById('currentPrice').value);
-    const bvps   = parseFloat(document.getElementById('bvps').value);
-    const eps    = parseFloat(document.getElementById('eps').value);
+    const ticker  = $('ticker').value.trim() || '—';
+    const name    = $('stockName').value.trim() || '—';
+    const price   = parseFloat($('currentPrice').value);
+    const bvps    = parseFloat($('bvps').value);
+    const epsPess = parseFloat($('epsPess').value) || 0;
+    const epsBase = parseFloat($('epsBase').value);
+    const epsOpt  = parseFloat($('epsOpt').value) || 0;
 
     if (!price || price <= 0) { alert('請輸入正確的現價'); return; }
 
-    // P/B
-    document.getElementById('res-ticker-pb').textContent = ticker;
-    document.getElementById('res-name-pb').textContent   = name;
+    $('res-ticker-pb').textContent = ticker;
+    $('res-name-pb').textContent   = name;
     if (bvps > 0) {
-      document.getElementById('res-metric-pb').textContent = `P/B  |  每股淨值 ${bvps.toFixed(2)} 元`;
-      document.getElementById('res-pb').innerHTML = buildTable(pbLevels, bvps, price);
+      $('res-metric-pb').textContent = `P/B｜每股淨值 ${bvps.toFixed(2)} 元`;
+      $('res-pb').innerHTML = buildPbTable(pbLevels, bvps, price);
     } else {
-      document.getElementById('res-pb').innerHTML = '<p class="empty-msg">請輸入每股淨值 (BVPS)</p>';
+      $('res-pb').innerHTML = '<p class="empty-msg">請輸入每股淨值 (BVPS)</p>';
     }
 
-    // P/E
-    document.getElementById('res-ticker-pe').textContent = ticker;
-    document.getElementById('res-name-pe').textContent   = name;
-    if (eps > 0) {
-      document.getElementById('res-metric-pe').textContent = `P/E  |  EPS ${eps.toFixed(2)} 元`;
-      document.getElementById('res-pe').innerHTML = buildTable(peLevels, eps, price);
+    $('res-ticker-pe').textContent = ticker;
+    $('res-name-pe').textContent   = name;
+    if (epsBase > 0) {
+      $('res-metric-pe').textContent = `P/E｜基準 EPS ${epsBase.toFixed(2)} 元`;
+      $('res-pe').innerHTML = buildPeTable(peLevels, epsPess, epsBase, epsOpt, price);
     } else {
-      document.getElementById('res-pe').innerHTML = '<p class="empty-msg">請輸入每股盈餘 (EPS)</p>';
+      $('res-pe').innerHTML = '<p class="empty-msg">請輸入基準 EPS</p>';
+    }
+
+    saveLevels();
+  }
+
+  // ── FinMind：5 年歷史 P/E、P/B → 百分位定錨 ──
+  function percentile(sorted, p) {
+    if (!sorted.length) return null;
+    const idx = (sorted.length - 1) * p;
+    const lo = Math.floor(idx), hi = Math.ceil(idx);
+    return sorted[lo] + (sorted[hi] - sorted[lo]) * (idx - lo);
+  }
+
+  async function loadHistory() {
+    const code = $('ticker').value.trim();
+    const note = $('dataNote');
+    if (!code) { alert('請先輸入股票代號'); return; }
+
+    note.className = 'data-note';
+    note.textContent = '載入歷史資料中…（FinMind 免費 API，可能需數秒）';
+
+    const end = new Date();
+    const start = new Date(end);
+    start.setFullYear(end.getFullYear() - 5);
+    const fmt = d => d.toISOString().slice(0, 10);
+
+    const token = localStorage.getItem('fm_token') || '';
+    let url = `https://api.finmindtrade.com/api/v4/data?dataset=TaiwanStockPER&data_id=${code}&start_date=${fmt(start)}&end_date=${fmt(end)}`;
+    if (token) url += `&token=${encodeURIComponent(token)}`;
+
+    try {
+      const res = await fetch(url);
+      const json = await res.json();
+      if (!json.data || !json.data.length) {
+        throw new Error(json.msg || '無資料（可能是代號錯誤或 API 流量限制）');
+      }
+
+      const rows = json.data;
+      const pers = rows.map(r => +r.PER).filter(v => v > 0).sort((a, b) => a - b);
+      const pbrs = rows.map(r => +r.PBR).filter(v => v > 0).sort((a, b) => a - b);
+      const latest = rows[rows.length - 1];
+
+      // 用最新一筆 PBR/PER 反推 BVPS 與 TTM EPS
+      const price = parseFloat($('currentPrice').value) || 0;
+      let filled = [];
+      if (+latest.PBR > 0 && price > 0) {
+        const bvps = price / +latest.PBR;
+        $('bvps').value = bvps.toFixed(2);
+        filled.push(`BVPS ${bvps.toFixed(2)}`);
+      }
+      if (+latest.PER > 0 && price > 0) {
+        const eps = price / +latest.PER;
+        $('epsBase').value = eps.toFixed(2);
+        // 悲觀/樂觀跟著基準重算（±30%），避免留下舊股票的數字造成矛盾
+        $('epsPess').value = (eps * 0.7).toFixed(2);
+        $('epsOpt').value  = (eps * 1.3).toFixed(2);
+        filled.push(`TTM EPS ${eps.toFixed(2)}`);
+      }
+
+      // 百分位定錨：L1=5%, L2=25%, L3=50%, L4=75%, L5=95%
+      const anchors = [
+        ['L1', 0.05, '歷史 5 百分位'],
+        ['L2', 0.25, '歷史 25 百分位'],
+        ['L3', 0.50, '歷史中位數'],
+        ['L4', 0.75, '歷史 75 百分位'],
+        ['L5', 0.95, '歷史 95 百分位'],
+      ];
+      if (pbrs.length) {
+        pbLevels = anchors.map(([lb, p, n]) =>
+          ({ label: lb, value: +percentile(pbrs, p).toFixed(2), note: n }));
+        renderLevels('pb', pbLevels);
+      }
+      if (pers.length) {
+        peLevels = anchors.map(([lb, p, n]) =>
+          ({ label: lb, value: +percentile(pers, p).toFixed(1), note: n }));
+        renderLevels('pe', peLevels);
+      }
+      saveLevels();
+
+      note.className = 'data-note ok';
+      note.textContent = `✓ 已載入 ${rows[0].date} ~ ${latest.date} 共 ${rows.length} 筆`
+        + (filled.length ? `｜已回填：${filled.join('、')}` : '')
+        + `｜倍數已依歷史百分位定錨（仍可手動調整）`;
+
+      calculate();
+    } catch (err) {
+      note.className = 'data-note error';
+      note.textContent = '✗ 載入失敗：' + err.message;
     }
   }
 
-  // ── 股票代號自動帶入 ─────────────────────
+  // ── 股票代號自動帶入（TWSE 即時報價）──
   let fetchTimer = null;
-  const statusEl = document.getElementById('tickerStatus');
+  const statusEl = $('tickerStatus');
 
-  document.getElementById('ticker').addEventListener('input', function () {
+  $('ticker').addEventListener('input', function () {
     clearTimeout(fetchTimer);
     const code = this.value.trim();
     statusEl.textContent = '';
     statusEl.className = 'ticker-status';
     if (code.length < 4) return;
+
+    // 載入該股已儲存的倍數
+    loadLevelsFor(code);
+
     statusEl.textContent = '查詢中…';
     statusEl.className = 'ticker-status loading';
     fetchTimer = setTimeout(() => fetchStockInfo(code), 500);
@@ -522,24 +777,40 @@
         const msg  = data.msgArray?.[0];
         if (!msg || !msg.n) continue;
 
-        document.getElementById('stockName').value  = msg.n;
-        // z = 即時成交價，非交易時間為 '-'，fallback 用 y (昨收)
+        $('stockName').value = msg.n;
         const price = (msg.z && msg.z !== '-') ? msg.z : msg.y;
         if (price && price !== '-') {
-          document.getElementById('currentPrice').value = parseFloat(price).toFixed(2);
+          $('currentPrice').value = parseFloat(price).toFixed(2);
         }
         statusEl.textContent = '✓ ' + msg.n;
         statusEl.className = 'ticker-status ok';
         return;
-      } catch (_) { /* ignore, try next */ }
+      } catch (_) { /* try next */ }
     }
     statusEl.textContent = '找不到';
     statusEl.className = 'ticker-status error';
   }
-  // ─────────────────────────────────────────
 
-  // 頁面載入時自動計算一次
-  calculate();
+  // ── 初始化 ──
+  (function init() {
+    // FinMind token 還原
+    const tk = localStorage.getItem('fm_token');
+    if (tk) $('fmToken').value = tk;
+
+    // URL 參數 ?ticker=2330 → 自動帶入並查詢
+    const urlTicker = new URLSearchParams(location.search).get('ticker');
+    if (urlTicker) {
+      $('ticker').value = urlTicker;
+      loadLevelsFor(urlTicker);
+      fetchStockInfo(urlTicker).then(calculate);
+    } else {
+      loadLevelsFor($('ticker').value.trim());
+    }
+
+    renderLevels('pb', pbLevels);
+    renderLevels('pe', peLevels);
+    calculate();
+  })();
 </script>
 </body>
 </html>
